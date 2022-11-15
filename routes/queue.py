@@ -1,20 +1,18 @@
 import json
 from time import strftime
-
-
-
+import time
 import redis
-from rq import Queue, Connection
-from flask import Blueprint, jsonify, request, current_app
+from rq import Queue
+from flask import Blueprint, jsonify, request
 
 routes_queue = Blueprint("queue", __name__)
 
 
-r = redis.Redis(host='localhost',port=6379,db=0)
+r = redis.Redis(host="redis-container",port=6379, db=0)
 q = Queue(connection=r)
 
 @routes_queue.route("/push", methods=["POST"] )
-def pop():
+def push_m_redis():
 
     data = request.get_json()
     message = data["msg"]
@@ -22,21 +20,18 @@ def pop():
 
     print(r.get("msg"))
     result = {
-        "msg": message,
+        "msg": job,
         "Time": strftime('%a, %d %b %Y %H:%M:%S')
     }
     return json.dumps({"result": result})
-
-
-import time
 
 
 def create_task(task_type):
     time.sleep(int(task_type) * 10)
     return True
 
-@routes_queue.route("/push1", methods=["POST"] )
-def run_task():
+@routes_queue.route("/push/enqueue", methods=["POST"] )
+def create_message_with_enqueue():
     task_type = request.get_json()
 
     task = q.enqueue(create_task, task_type)
@@ -49,10 +44,10 @@ def run_task():
             "task_id": task.get_id()
         }
     }
-    return jsonify(response_object), 202
+    return jsonify(response_object), 201
 
-@routes_queue.route("/count", methods=["GET"] )
-def count_messages():
+@routes_queue.route("/count/enqueue", methods=["GET"] )
+def count_messages_with_enqueue():
 
     print(q.get_job_ids())
     print(q.get_jobs())
@@ -60,25 +55,25 @@ def count_messages():
         "status": "0k",
         "count": q.count
     }
-    return jsonify(response_object), 202
+    return jsonify(response_object), 200
 
 @routes_queue.route("/count2", methods=["GET"] )
 def count_messages_with_Redis():
-    total = r.llen(('LanguageList'))
+    total = r.llen(('Messages'))
     response_object = {
         "status": "0k",
         "count": total
     }
-    return jsonify(response_object), 202
+    return jsonify(response_object), 200
 
 @routes_queue.route("/push2", methods=["POST"] )
-def create_r_queue():
+def create_r_redis():
 
     print(r.keys())
-    r.lpush('LanguageList', request.get_json()['msg'])
+    r.lpush('Messages', request.get_json()['msg'])
 
-    print(r.llen(('LanguageList')))
-    l = r.lrange('LanguageList', 0,r.llen(('LanguageList'))-1)
+    print(r.llen(('Messages')))
+    l = r.lrange('Messages', 0,r.llen(('Messages'))-1)
     for x in l:
         print(x)
 
@@ -88,17 +83,17 @@ def create_r_queue():
     response_object = {
         "status": "success"
     }
-    return jsonify(response_object), 202
+    return jsonify(response_object), 200
 
 @routes_queue.route("/pop", methods=["DELETE"] )
-def delete_r_queue():
+def delete_r_redis():
 
     print(r.keys())
-    msg = r.lindex('LanguageList',0).decode()
-    r.lpop('LanguageList')
+    msg = r.lindex('Messages',0).decode()
+    r.lpop('Messages')
 
-    print(r.llen(('LanguageList')))
-    l = r.lrange('LanguageList', 0,r.llen(('LanguageList'))-1)
+    print(r.llen(('Messages')))
+    l = r.lrange('Messages', 0,r.llen(('Messages'))-1)
     for x in l:
         print(x)
 
@@ -106,4 +101,4 @@ def delete_r_queue():
         "status": "success",
         "msg": msg
     }
-    return jsonify(response_object), 202
+    return jsonify(response_object), 200
