@@ -3,7 +3,7 @@ try:
     import unittest
     import requests
     import redis
-    from Tests import factory
+    from Tests.uniitest import factory
     from os import getenv
 
     from dotenv import load_dotenv
@@ -17,7 +17,7 @@ class QueueTest(unittest.TestCase):
     URL_LOGIN = getenv("URL_LOGING_TEST")
     URL_TOKEN = getenv("URL_TOKEN_TEST")
 
-    r = redis.Redis(host="redis-container", port=6379, db=0)
+    r = redis.Redis(host="redis-container", port=6379, db=1)
 
     msg = factory.msg
     msg2 = factory.msg2
