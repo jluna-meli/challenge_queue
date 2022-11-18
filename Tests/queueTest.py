@@ -17,7 +17,7 @@ class QueueTest(unittest.TestCase):
     URL_LOGIN = getenv("URL_LOGING_TEST")
     URL_TOKEN = getenv("URL_TOKEN_TEST")
 
-    r = redis.Redis(host="localhost", port=6379, db=0)
+    r = redis.Redis(host="redis-container", port=6379, db=0)
 
     msg = factory.msg
     msg2 = factory.msg2
