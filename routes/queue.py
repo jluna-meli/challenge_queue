@@ -1,8 +1,6 @@
 import redis
-import werkzeug
 from rq import Queue
-from flask import Blueprint, jsonify, request, current_app
-from werkzeug.exceptions import Unauthorized
+from flask import Blueprint, jsonify, request
 
 from config.function_jwt import validate_token
 
@@ -24,7 +22,7 @@ q = Queue(connection=r, default_timeout=1)
 
 
 @routes_queue.route("/connection/ping", methods=["GET"])
-def connection_Redis():
+def connection_redis():
     try:
         ping = "Connection successful" if r.ping() else "Ups, something happends with Redis Connection"
 
@@ -49,14 +47,13 @@ def count_messages_with_redis():
         return jsonify({"status": "Internal Error"}), 501
 
 
-
 @routes_queue.route("/push", methods=["POST"])
 def create_r_redis():
     try:
-        if request.get_json()['msg'] == None:
+        if request.get_json()['msg'] is None:
             return jsonify({"error": "Message canot be a null"}), 400
 
-        if isinstance(request.get_json()['msg'], str) == False:
+        if not isinstance(request.get_json()['msg'], str):
             return jsonify({"error": "The message should be a string "}), 400
         push_redis('Messages', request.get_json()['msg'])
 
@@ -71,7 +68,7 @@ def create_r_redis():
 @routes_queue.route("/pop", methods=["DELETE"])
 def delete_r_redis():
     try:
-        if r.llen(('Messages')) == 0:
+        if r.llen('Messages') == 0:
             return jsonify({"error": "Its not possible to delete any message because there not messages in queue"}), 400
 
         msg = r.lindex('Messages', 0).decode()
@@ -96,4 +93,3 @@ def delete_messages_redis(key):
 
 def push_redis(key, value):
     return r.lpush(key, value)
-

@@ -1,6 +1,6 @@
 from flask import Flask
-from app.routes.auth import routes_auth
-from app.routes.queue import routes_queue
+from routes.auth import routes_auth
+from routes.queue import routes_queue
 
 
 def create_app():
