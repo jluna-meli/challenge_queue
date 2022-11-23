@@ -13,12 +13,12 @@ def create_token(data: dict):
                             "exp": expire_data(1)},
                    key=getenv("SECRET"),
                    algorithm="HS256")
-    return token.encode("UTF-8")
+    return token
 
 def validate_token(token, output=False):
     try:
         if output:
-            return decode(token,key=getenv("SECRET"),algorithms=["HS256"])
+            return decode(token, key=getenv("SECRET"), algorithms=["HS256"])
         decode(token, key=getenv("SECRET"), algorithms=["HS256"])
     except exceptions.DecodeError:
         response = jsonify({"error": "Invalid token"})
