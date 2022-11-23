@@ -1,21 +1,23 @@
 import pytest
-from main import app
+from app import create_app
 
 
-@pytest.fixture()
-def client():
-    return app.test_client()
+# @pytest.fixture()
+# def client(app):
+#     return app.test_client()
 
 
-@pytest.fixture()
+@pytest.fixture
 def login_env(monkeypatch):
-    monkeypatch.setenv('USERNAME_TEST', 'Admin')
-    monkeypatch.setenv('PASSWORD_TEST', '1234')
+    monkeypatch.setenv('USERNAME', 'Admin')
+    monkeypatch.setenv('PASSWORD', '1234')
+    monkeypatch.setenv('SECRET', 'ThisIsTheKey')
 
 
-@pytest.fixture()
-def url_env(monkeypatch):
-    monkeypatch.setenv('URL_LOGING_TEST', 'http://localhost:8000/api/login')
-    monkeypatch.setenv('URL_TOKEN_TEST', 'http://localhost:8000/api/verify/token')
-    monkeypatch.setenv('URL_TEST', 'http://localhost:8000/api/queue/')
-
+@pytest.fixture
+def app(monkeypatch):
+    monkeypatch.setenv('USERNAME', 'Admin')
+    monkeypatch.setenv('PASSWORD', '1234')
+    monkeypatch.setenv('SECRET', 'ThisIsTheKey')
+    flask_app = create_app()
+    return flask_app
