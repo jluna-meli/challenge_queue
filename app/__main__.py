@@ -1,14 +1,7 @@
-from flask import Flask
-from routes.auth import routes_auth
-from routes.queue import routes_queue
 from dotenv import load_dotenv
+from app import create_app
 
-app = Flask(__name__)
-
-app.register_blueprint(routes_auth, url_prefix="/api")
-app.register_blueprint(routes_queue, url_prefix="/api/queue")
-
-
+app = create_app()
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     load_dotenv()
