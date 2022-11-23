@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from __init__ import create_app
+from __init import create_app
 
 app = create_app()
 # Press the green button in the gutter to run the script.

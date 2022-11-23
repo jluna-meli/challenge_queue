@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from config.function_jwt import create_token, validate_token
+from utils.function_jwt import create_token, validate_token
 from os import getenv
 
 routes_auth = Blueprint("routes_auth", __name__)
