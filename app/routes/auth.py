@@ -8,13 +8,14 @@ routes_auth = Blueprint("routes_auth", __name__)
 def login():
     try:
         data = request.get_json()
-        if data['username'] == getenv("USERNAME"):
+        user = getenv("USERNAME")
+        if data['username'] == user:
             return create_token(data)
         else:
             response = jsonify({"error": "User not found"})
             response.status_code = 401
             return response
-    except:
+    except Exception as e:
         return jsonify({"status": "Internal Error"}), 501
 
 @routes_auth.route("/verify/token")
