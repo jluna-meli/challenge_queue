@@ -1,12 +1,14 @@
 from jwt import encode, decode, exceptions
 from os import getenv
 from datetime import datetime, timedelta
-from flask import  jsonify
+from flask import jsonify
 
-def expire_data (days: int):
+
+def expire_data(days: int):
     now = datetime.now()
     newDate = now + timedelta(days)
     return newDate
+
 
 def create_token(data: dict):
     token = encode(payload={**data,
@@ -14,6 +16,7 @@ def create_token(data: dict):
                    key=getenv("SECRET"),
                    algorithm="HS256")
     return token
+
 
 def validate_token(token, output=False):
     try:
