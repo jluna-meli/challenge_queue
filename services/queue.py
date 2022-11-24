@@ -1,7 +1,6 @@
 import redis
 from flask import jsonify
 
-
 r = redis.Redis(host="redis-container", port=6379, db=0, socket_connect_timeout=2)
 
 
@@ -32,10 +31,11 @@ def count_messages_service():
 def push_message_service(data):
     try:
         if data['msg'] is None:
-            return jsonify({"error": "Message canot be a null"}), 400
+            return jsonify({"error": "Message cannot be a null"}), 400
 
         if not isinstance(data['msg'], str):
             return jsonify({"error": "The message should be a string "}), 400
+
         push_redis('Messages', data['msg'])
 
         response_object = {
@@ -48,10 +48,11 @@ def push_message_service(data):
 
 def delete_mesaage_service():
     try:
-        if counter_messages('Messages') == 0:
+        queue_size = counter_messages('Messages')
+        if queue_size == 0:
             return jsonify({"error": "Its not possible to delete any message because there not messages in queue"}), 400
 
-        msg = r.lindex('Messages', 0).decode()
+        msg = msg_delete('Messages', queue_size)
         delete_messages_redis('Messages')
 
         response_object = {
@@ -75,3 +76,5 @@ def push_redis(key, value):
     return r.lpush(key, value)
 
 
+def msg_delete(key, queue_size):
+    return r.lindex(key, queue_size - 1).decode()
