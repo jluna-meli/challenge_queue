@@ -1,3 +1,5 @@
+import fakeredis
+
 try:
     import pytest
     import redis
@@ -7,7 +9,7 @@ try:
 except Exception as e:
     print("Some Modules are  Missing {} ".format(e))
 
-
+r = fakeredis.FakeStrictRedis(version=6)
 @pytest.mark.parametrize("json, status_code, message",
                          [(mv.msg_success, 201, b'{"status":"success"}\n'),
                           (mv.msg_non_string, 400, b'{"error":"The message should be a string "}\n'),
