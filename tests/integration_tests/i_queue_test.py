@@ -1,6 +1,6 @@
 try:
     import pytest
-    import tests.redis_tests.mocked_variables as mv
+    import tests.mocked_variables as mv
     import requests
     import json
 except Exception as e:

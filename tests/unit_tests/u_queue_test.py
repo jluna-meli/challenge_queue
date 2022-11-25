@@ -3,7 +3,7 @@ import fakeredis
 try:
     import pytest
     import redis
-    import tests.redis_tests.mocked_variables as mv
+    import tests.mocked_variables as mv
     import requests
     import os
 except Exception as e:

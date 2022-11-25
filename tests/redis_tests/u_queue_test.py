@@ -1,6 +1,7 @@
+import pytest
 import redis
 from services import queue as q
-import tests.redis_tests.mocked_variables as mv
+import tests.mocked_variables as mv
 import fakeredis
 
 r = fakeredis.FakeStrictRedis(version=6)
@@ -21,7 +22,7 @@ def test_count_verify_by_size():
 
     queue_size = r.llen(mv.key)
 
-    assert queue_size == 2
+    assert queue_size == 3
 
 
 def test_delete_with_fakeredis():
@@ -34,13 +35,16 @@ def test_delete_with_fakeredis():
     r.lpop(mv.key)
     queue_size_after_delete_one = r.llen(mv.key)
 
-    assert msg == b'The message test 1'
-    assert queue_size_after_delete_one == 1
+    assert msg == b'The message test'
+    assert queue_size_after_delete_one == 4
 
 
-def test_delete_with_fakeredis():
+def test_delete_with_fakeredis_():
     delete = r.lpop(mv.key)
     print(delete)
     queue_size_after_delete_one = r.llen(mv.key)
 
-    assert queue_size_after_delete_one == 0
+    assert queue_size_after_delete_one == 3
+
+if __name__ == "__main__":
+    pytest.main()

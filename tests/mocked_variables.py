@@ -1,7 +1,7 @@
 import pytest
 from flask import jsonify
 
-msg_success = {"msg": "This message"}
+msg_success = {"msg": "The message test"}
 msg_non_string = {"msg": 15}
 msg_null = {"msg": None}
 
@@ -10,9 +10,14 @@ data_login = {
     "password": "1234"
 }
 
+key = 'Test'
+value = "The message test"
+
+value1 = "The message test 1"
+value2 = "The message test 2"
+
 URL_LOGING_TEST = "http://localhost:8000/api/login"
 URL_TOKEN_TEST = 'http://localhost:8000/api/verify/token'
 URL_QUEUE = 'http://localhost:8000/queue/'
 
-expected_response_push = jsonify({"status": "success"})
-expected_response_push.status_code = 200
+expected_response_push = {"status": "success"}
