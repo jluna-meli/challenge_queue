@@ -1,6 +1,6 @@
 <div style="text-align: center;">
-<h1>Sprint 3</h1>
-Challenge Queue
+<h1>Challenge Queue</h1>
+Infra Security
 </div>
 
 <br />
@@ -28,6 +28,7 @@ Challenge Queue
 
 * En terminal correr la siguiente linea de código.
 ```
+   docker compose build
    docker compose up
 ```
 
@@ -45,15 +46,15 @@ _Herramientas utilizadas:_
 
 * [Flask](https://flask.palletsprojects.com/en/2.2.x/)
 * [Redis](https://redis.io/)
-* [Unittest](https://docs.python.org/3/library/unittest.html)
+* [Pytest](https://docs.pytest.org/en/6.2.x/fixture.html)
 
 ---
 ## Endpoints
 
 #### Login
-| HTTP | URI         | Descripción                                    |
-|:-----|:------------|:-----------------------------------------------|
-| POST | /login       | Iniciar sesión                         |
+| HTTP | URI        | Descripción                                    |
+|:-----|:-----------|:-----------------------------------------------|
+| POST | /api/login | Iniciar sesión                         |
 
 ##### Request
 
@@ -99,7 +100,7 @@ Status Code 200
 
 | HTTP  | URI             | Descripción             |
 |:------|:----------------|:------------------------|
-| POST  | /api/queue/push | Dar de alta un  mensaje |
+| POST  | /queue/push | Dar de alta un  mensaje |
 
 ##### Request
 
@@ -127,7 +128,7 @@ Authorization = Bearer ey****y7b
 
 | HTTP   | URI            | Descripción                          |
 |:-------|:---------------|:-------------------------------------|
-| DELETE | /api/queue/pop | Elimina el mensaje de la cola (FIFO) |
+| DELETE | /queue/pop | Elimina el mensaje de la cola (FIFO) |
 
 ##### Request
 
@@ -152,7 +153,7 @@ Authorization = Bearer ey****y7b
 
 | HTTP | URI            | Descripción                          |
 |:-----|:---------------|:-------------------------------------|
-| GET  | /api/queue/pop | Elimina el mensaje de la cola (FIFO) |
+| GET  | /queue/pop | Elimina el mensaje de la cola (FIFO) |
 
 ##### Request
 
@@ -173,7 +174,29 @@ Authorization = Bearer ey****y7b
 
 ```
 ---
+### Connection with Redis
 
+| HTTP | URI             | Descripción                                                           |
+|:-----|:----------------|:----------------------------------------------------------------------|
+| GET  | /queue/connection/ping| Revisa que la conexión con Redis sea exitosa, de ser así retorna pong |
+
+##### Request
+
+```
+Headers:
+Authorization = Bearer ey****y7b
+```
+
+---
+
+##### Response
+```json
+{
+    "status": "Connection successful"
+}
+```
+
+---
 ## Validaciones
 ```
 • Header: 
@@ -204,7 +227,22 @@ Authorization = Bearer ey****y7b
 
 ---
 ### Comentarios generales
+```
+1. En caso de que al correr las pruebas no reconozca client o mocker, instalar
 
+     pip3 install pytest-flask
+     pip3 install pytest-mock
+ 
+2. Es necesario configurar las variables de entorno en el archivo
+     .env 
+     
+3. Para correr los test se deberán correr desde el if de  __main__ donde de ejecuta
+    if __name__ == "__main__":
+        pytest.main()
+   ya que de querer correr los test de manera individual los valores podrían ser diferentes.
+
+4. La colección de Postman se encuentra en la carpeta de Utils 
+```
 ---
 
 
