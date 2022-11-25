@@ -1,7 +1,7 @@
 import redis
 from flask import jsonify
 
-r = redis.Redis(host="redis-container", port=6379, db=0, socket_connect_timeout=2)
+r = redis.Redis(host="redis-container", port=6379, db=0)
 
 
 def connection_redis_service():

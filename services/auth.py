@@ -3,7 +3,7 @@ from utils.function_jwt import create_token, validate_token
 from flask import jsonify, request
 from os import getenv
 
-r = redis.Redis(host="redis-container", port=6379, db=0, socket_connect_timeout=2)
+r = redis.Redis(host="redis-container", port=6379, db=0)
 
 
 def verify_token_service():
