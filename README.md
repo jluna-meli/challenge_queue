@@ -214,6 +214,8 @@ Authorization = Bearer ey****y7b
 
 ### Listado de tests
 
+NOTA: Para correr el test de integración debe estar levantado el proyecto con el docker-compose up.
+
 #### Test
 ```
 • test_validate_toke: Verifica que el token sea valido
