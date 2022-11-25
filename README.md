@@ -49,6 +49,28 @@ _Herramientas utilizadas:_
 * [Pytest](https://docs.pytest.org/en/6.2.x/fixture.html)
 
 ---
+
+
+---
+### Comentarios generales
+```
+1. En caso de que al correr las pruebas no reconozca client o mocker, instalar
+
+     pip3 install pytest-flask
+     pip3 install pytest-mock
+ 
+2. Es necesario configurar las variables de entorno en el archivo
+     .env 
+     
+3. Para correr los test se deberán correr desde el if de  __main__ donde de ejecuta
+    if __name__ == "__main__":
+        pytest.main()
+   ya que de querer correr los test de manera individual los valores podrían ser diferentes.
+
+4. La colección de POSTMAN se encuentra en la carpeta de Utils 
+```
+---
+
 ## Endpoints
 
 #### Login
@@ -226,25 +248,5 @@ NOTA: Para correr el test de integración debe estar levantado el proyecto con e
 • test_r_pop: Verifica que elimine satisfactoriamente un mensaje, status_code 200
 • test_r_pop_fail: Verifica que falle cuando no haya mensajes por eliminar, status_code 400
 ```
-
----
-### Comentarios generales
-```
-1. En caso de que al correr las pruebas no reconozca client o mocker, instalar
-
-     pip3 install pytest-flask
-     pip3 install pytest-mock
- 
-2. Es necesario configurar las variables de entorno en el archivo
-     .env 
-     
-3. Para correr los test se deberán correr desde el if de  __main__ donde de ejecuta
-    if __name__ == "__main__":
-        pytest.main()
-   ya que de querer correr los test de manera individual los valores podrían ser diferentes.
-
-4. La colección de Postman se encuentra en la carpeta de Utils 
-```
----
 
 
