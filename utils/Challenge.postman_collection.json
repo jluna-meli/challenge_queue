@@ -42,20 +42,27 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluIiwicGFzc3dvcmQiOiIxMjM0IiwiZXhwIjoxNjY4MjQzNzQ3fQ.5EirYy1r1GFs0PC5oCabuyPgcKMVxg9RuLR4XQ4zy24",
+							"value": "eyJhbGcZXhwy8c6CDaV3yZvqxgGE",
 							"type": "string"
 						}
 					]
 				},
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
 				"url": {
-					"raw": "http://localhost:4000/api/verify/token",
+					"raw": "http://localhost:8000/api/verify/token",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "4000",
+					"port": "8000",
 					"path": [
 						"api",
 						"verify",
@@ -68,11 +75,21 @@
 		{
 			"name": "PUSH with Redis",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhxNjYZvqxgGE",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"msg\": \"This messagage 8\"\n}",
+					"raw": "{\n    \"msg\": \"this test\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -80,16 +97,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/queue/push2",
+					"raw": "http://localhost:8000/queue/push",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "4000",
+					"port": "8000",
 					"path": [
-						"api",
 						"queue",
-						"push2"
+						"push"
 					]
 				}
 			},
@@ -98,19 +114,31 @@
 		{
 			"name": "Count with Redis",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGcka3k",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/api/queue/count2",
+					"raw": "http://127.0.0.1:8000/queue/count",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"127",
+						"0",
+						"0",
+						"1"
 					],
-					"port": "4000",
+					"port": "8000",
 					"path": [
-						"api",
 						"queue",
-						"count2"
+						"count"
 					]
 				}
 			},
@@ -119,19 +147,28 @@
 		{
 			"name": "Connection ping",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJdjdk"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/api/queue/count2",
+					"raw": "http://localhost:8000/queue/connection/ping",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "4000",
+					"port": "8000",
 					"path": [
-						"api",
 						"queue",
-						"count2"
+						"connection",
+						"ping"
 					]
 				}
 			},
@@ -140,17 +177,33 @@
 		{
 			"name": "Pop with Redis",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbG2VybmFtZSIGLX3XFTfrqdrQY",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzIjv4TGhJwVcXmbdA",
+						"type": "text",
+						"disabled": true
+					}
+				],
 				"url": {
-					"raw": "http://localhost:8000/api/queue/pop",
+					"raw": "http://localhost:8000/queue/pop",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
-						"api",
 						"queue",
 						"pop"
 					]
